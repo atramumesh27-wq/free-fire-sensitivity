@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>Divice Sensitivity Generator Pro</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
+  /* Pinterest Image Background with dark overlay */
+  background: linear-gradient(rgba(5, 5, 9, 0.85), rgba(22, 6, 33, 0.85)), 
+    url('https://i.pinimg.com/736x/3c/a1/gw/3ca1gwgnx.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:18px 14px 35px;
+}
+
+.header{
+  text-align:center;
+  padding:12px 5px 20px;
+}
+
+.logo{
+  width:78px;
+  height:78px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:24px;
+  overflow: hidden;
+  background:linear-gradient(145deg,#ff2458,#792cff);
+  box-shadow:0 0 35px #a52cff88;
+  animation: logoGlow 3s infinite alternate;
+}
+
+@keyframes logoGlow {
+  0% { box-shadow: 0 0 20px #ff245866; transform: scale(1); }
+  100% { box-shadow: 0 0 45px #a52cffaa; transform: scale(1.03); }
+}
+
+h1{
+  margin:14px 0 5px;
+  font-size:27px;
+  background: linear-gradient(90deg, #fff, #ff6685, #a52cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle{
+  color:#aaa1b3;
+  font-size:13px;
+}
+
+.ad-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 11px;
+  color: #a79cac;
+}
+
+.card{
+  background:rgba(18, 12, 27, 0.85);
+  backdrop-filter: blur(10px);
+  border:1px solid #ffffff14;
+  border-radius:21px;
+  padding:17px;
+  margin-bottom:15px;
+  box-shadow:0 12px 40px #0009;
+}
+
+.top-back-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 15px;
+  transition: background 0.2s;
+}
+
+.top-back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+
+.field{
+  margin-bottom:14px;
+  position: relative;
+}
+
+label{
+  display:block;
+  color:#c8bdcf;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  border:1px solid #ffffff18;
+  background:#0b0810;
+  color:#fff;
+  font-size:15px;
+  outline:none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus,select:focus{
+  border-color:#a52cff;
+  box-shadow: 0 0 12px #a52cff44;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #14101c;
+  border: 1px solid #ffffff22;
+  border-radius: 0 0 13px 13px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 99;
+  display: none;
+}
+
+.suggestion-item {
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #dcd6e1;
+  cursor: pointer;
+  border-bottom: 1px solid #ffffff0a;
+}
+
+.suggestion-item:hover {
+  background: #231930;
+  color: #fff;
+}
+
+.phone-hint {
+  font-size: 11px;
+  color: #ff6685;
+  margin-top: 5px;
+  display: none;
+}
+
+.generate{
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:15px;
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  background:linear-gradient(90deg,#ff2458,#8c2cff);
+  box-shadow:0 8px 28px #8c2cff55;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 5px;
+  animation: btnPulse 2s infinite;
+}
+
+@keyframes btnPulse {
+  0% { box-shadow: 0 0 15px #ff245866; }
+  50% { box-shadow: 0 0 30px #8c2cffaa; }
+  100% { box-shadow: 0 0 15px #ff245866; }
+}
+
+.generate:active{
+  transform:scale(.97);
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.player{
+  padding:13px;
+  margin-bottom:15px;
+  border-radius:14px;
+  background:#0b0810;
+  border:1px solid #ffffff12;
+}
+
+.playerName{
+  font-size:18px;
+  font-weight:900;
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-row {
+  background: #130e19;
+  border: 1px solid #ffffff10;
+  border-radius: 12px;
+  padding: 12px 14px;
+  animation: slideInUp 0.5s ease backwards;
+}
+
+.setting-row:nth-child(1) { animation-delay: 0.1s; }
+.setting-row:nth-child(2) { animation-delay: 0.2s; }
+.setting-row:nth-child(3) { animation-delay: 0.3s; }
+.setting-row:nth-child(4) { animation-delay: 0.4s; }
+.setting-row:nth-child(5) { animation-delay: 0.5s; }
+.setting-row:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.row-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.row-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #dcd6e1;
+}
+
+.row-val {
+  font-size: 15px;
+  font-weight: 900;
+  color: #ffcc00;
+  text-shadow: 0 0 8px #ffcc0055;
+}
+
+.game-bar {
+  height: 6px;
+  background: #2a2233;
+  border-radius: 4px;
+  position: relative;
+  overflow: visible;
+}
+
+.game-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #ff9900, #ffcc00);
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.1, 1, 0.1, 1);
+  box-shadow: 0 0 8px #ffcc0066;
+}
+
+.game-handle {
+  width: 10px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 2px;
+  position: absolute;
+  top: -4px;
+  left: 0%;
+  transform: translateX(-50%);
+  transition: left 0.8s cubic-bezier(0.1, 1, 0.1, 1);
+  box-shadow: 0 0 8px #fff;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.copy{
+  flex: 1;
+  padding:14px;
+  border-radius:13px;
+  border:1px solid #ffffff15;
+  background:#17111e;
+  color:white;
+  font-weight:bold;
+  font-size:14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.copy:hover {
+  background: #271e33;
+}
+
+.whatsapp-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 13px;
+  border: 0;
+  background: #25D366;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.whatsapp-btn:hover {
+  filter: brightness(1.1);
+}
+
+.reset{
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  border:0;
+  background:transparent;
+  color:#918899;
+  cursor: pointer;
+}
+
+.tip{
+  text-align:center;
+  color:#817786;
+  font-size:11px;
+  line-height:1.5;
+  padding:5px 15px;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  margin-bottom:10px;
+  border-radius:20px;
+  background:#ff245820;
+  color:#ff6685;
+  font-size:10px;
+  font-weight:900;
+  animation: badgePulse 1.5s infinite alternate;
+}
+
+@keyframes badgePulse {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <div class="logo">
+      <img src="https://i.imgur.com/your_image_link.png" alt="Logo" style="width:100%; height:100%; object-fit:cover;">
+    </div>
+    <h1>🔥 Divice Sensitivity</h1>
+    <div class="subtitle">Free Fire Headshot Generator</div>
+  </div>
+
+  <div class="ad-box">
+    <span>Sponsored Advertisement</span>
+  </div>
+
+  <!-- PAGE 1: Simple Form -->
+  <div class="page active" id="page1">
+    <div class="card">
+      <div class="title">📱 Device Details</div>
+
+      <div class="field">
+        <label>Real Device Model</label>
+        <input id="phoneModel" type="text" placeholder="Enter your device name" autocomplete="off" oninput="handlePhoneInput()">
+        <div id="suggestionsBox" class="suggestions-list"></div>
+        <div id="phoneHint" class="phone-hint">⚠️ Please enter a valid mobile model name</div>
+      </div>
+
+      <div class="field">
+        <label>🎯 DPI</label>
+        <select id="dpi">
+          <option value="400">400</option>
+          <option value="450">450</option>
+          <option value="500">500</option>
+          <option value="550" selected>550</option>
+          <option value="600">600</option>
+          <option value="650">650</option>
+          <option value="700">700+</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>🎮 Play Style</label>
+        <select id="style">
+          <option value="balanced" selected>Balanced</option>
+          <option value="rush">Rush / Fast Drag</option>
+          <option value="onetap">One-Tap</option>
+          <option value="headshot">Drag Headshot</option>
+          <option value="sniper">Sniper</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>👆 Touch Response</label>
+        <select id="touch">
+          <option value="normal">Normal</option>
+          <option value="fast" selected>Fast</option>
+          <option value="veryfast">Very Fast</option>
+        </select>
+      </div>
+
+      <button class="generate" onclick="generate()">
+        ⚡ GENERATE SENSITIVITY
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Results Display -->
+  <div class="page" id="page2">
+    <button class="top-back-btn" onclick="goBackToForm()">← Back</button>
+
+    <div class="card">
+      <span class="badge">GENERATED SETTINGS</span>
+
+      <div class="player">
+        <div class="playerName" id="showDevice">📱 Device: --</div>
+      </div>
+
+      <div class="title">🎯 Game Settings Layout</div>
+
+      <div class="settings-list">
+
+        <div class="setting-row">
+          <div class="row-info">
+            <span class="row-name">General</span>
+            <span class="row-val" id="general">--</span>
+          </div>
+          <div class="game-bar">
+            <div class="game-fill" id="gbar"></div>
+            <div class="game-handle" id="ghandle"></div>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="row-info">
+            <span class="row-name">Red Dot Sight</span>
+            <span class="row-val" id="red">--</span>
+          </div>
+          <div class="game-bar">
+            <div class="game-fill" id="rbar"></div>
+            <div class="game-handle" id="rhandle"></div>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="row-info">
+            <span class="row-name">2× Scope</span>
+            <span class="row-val" id="two">--</span>
+          </div>
+          <div class="game-bar">
+            <div class="game-fill" id="tbar"></div>
+            <div class="game-handle" id="thandle"></div>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="row-info">
+            <span class="row-name">4× Scope</span>
+            <span class="row-val" id="four">--</span>
+          </div>
+          <div class="game-bar">
+            <div class="game-fill" id="fbar"></div>
+            <div class="game-handle" id="fhandle"></div>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="row-info">
+            <span class="row-name">Sniper Scope</span>
+            <span class="row-val" id="sniper">--</span>
+          </div>
+          <div class="game-bar">
+            <div class="game-fill" id="sbar"></div>
+            <div class="game-handle" id="shandle"></div>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="row-info">
+            <span class="row-name">Free Look</span>
+            <span class="row-val" id="free">--</span>
+          </div>
+          <div class="game-bar">
+            <div class="game-fill" id="flbar"></div>
+            <div class="game-handle" id="flhandle"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-row">
+        <button class="copy" onclick="copySettings()">📋 COPY</button>
+        <a id="whatsappShare" class="whatsapp-btn" target="_blank">💬 SHARE</a>
+      </div>
+
+      <button class="reset" onclick="resetApp()">↻ Reset</button>
+    </div>
+  </div>
+
+  <div class="ad-box" style="margin-top: 15px;">
+    <span>Sponsored Advertisement</span>
+  </div>
+
+  <div class="tip">
+    Generated sensitivity is optimized for verified device models.
+  </div>
+
+</div>
+
+<script>
+let generated = null;
+
+const phoneDatabase = [
+  "Redmi 13C", "Redmi Note 10 Pro", "Redmi Note 11", "Redmi Note 12", "Redmi Note 13 Pro",
+  "Realme 9 Pro", "Realme 10", "Realme 11 Pro", "Realme Narzo 50", "Realme GT",
+  "Samsung Galaxy M31", "Samsung Galaxy A52", "Samsung Galaxy S21", "Samsung Galaxy S23 Ultra", "Samsung Galaxy A14",
+  "POCO X3 Pro", "POCO X5", "POCO F5", "POCO M4 Pro",
+  "OnePlus Nord CE 3", "OnePlus 11R", "OnePlus 10R",
+  "iPhone 11", "iPhone 13", "iPhone 14 Pro Max", "iPhone 15",
+  "IQOO Neo 7", "IQOO Z7", "Vivo V29", "Oppo Reno 10"
+];
+
+function handlePhoneInput() {
+  const inputVal = document.getElementById("phoneModel").value.trim().toLowerCase();
+  const suggestionsBox = document.getElementById("suggestionsBox");
+  const hint = document.getElementById("phoneHint");
+
+  suggestionsBox.innerHTML = "";
+  hint.style.display = "none";
+
+  if (inputVal.length === 0) {
+    suggestionsBox.style.display = "none";
+    return;
+  }
+
+  const filteredPhones = phoneDatabase.filter(phone => phone.toLowerCase().includes(inputVal));
+
+  if (filteredPhones.length > 0) {
+    suggestionsBox.style.display = "block";
+    filteredPhones.forEach(phone => {
+      const div = document.createElement("div");
+      div.className = "suggestion-item";
+      div.innerText = phone;
+      div.onclick = function() {
+        document.getElementById("phoneModel").value = phone;
+        suggestionsBox.style.display = "none";
+      };
+      suggestionsBox.appendChild(div);
+    });
+  } else {
+    suggestionsBox.style.display = "none";
+  }
+}
+
+document.addEventListener("click", function(e) {
+  if (!e.target.closest("#phoneModel")) {
+    document.getElementById("suggestionsBox").style.display = "none";
+  }
+});
+
+function clamp(n,min,max){
+  return Math.max(min,Math.min(max,n));
+}
+
+function variation(){
+  return Math.floor(Math.random()*5)-2;
+}
+
+function generate(){
+  const phoneModelInput = document.getElementById("phoneModel").value.trim();
+  const hint = document.getElementById("phoneHint");
+
+  if(!phoneModelInput || phoneModelInput.length < 3){
+    hint.style.display = "block";
+    document.getElementById("phoneModel").focus();
+    return;
+  }
+
+  const dpi = Number(document.getElementById("dpi").value);
+  const style = document.getElementById("style").value;
+  const touch = document.getElementById("touch").value;
+
+  let base = 85;
+
+  const lowerModel = phoneModelInput.toLowerCase();
+  if(lowerModel.includes("iphone") || lowerModel.includes("rog") || lowerModel.includes("oneplus")){
+    base += 6;
+  } else if(lowerModel.includes("samsung") || lowerModel.includes("realme") || lowerModel.includes("poco") || lowerModel.includes("redmi")){
+    base += 3;
+  }
+
+  if(dpi < 450) base -= 4;
+  if(dpi >= 500 && dpi < 600) base += 1;
+  if(dpi >= 600) base += 3;
+
+  if(touch === "fast") base += 3;
+  if(touch === "veryfast") base += 6;
+
+  let general = base;
+  let red = base - 2;
+  let two = base - 8;
+  let four = base - 16;
+  let sniper = base - 30;
+  let free = base + 8;
+
+  if(style === "rush"){ general += 7; red += 8; two += 5; }
+  if(style === "onetap"){ general += 5; red += 10; two += 4; four -= 2; }
+  if(style === "headshot"){ general += 5; red += 7; two += 5; }
+  if(style === "sniper"){ general -= 4; red -= 5; two -= 7; four -= 5; sniper += 8; }
+
+  generated = {
+    general:clamp(Math.round(general+variation()),1,100),
+    red:clamp(Math.round(red+variation()),1,100),
+    two:clamp(Math.round(two+variation()),1,100),
+    four:clamp(Math.round(four+variation()),1,100),
+    sniper:clamp(Math.round(sniper+variation()),1,100),
+    free:clamp(Math.round(free+variation()),1,100)
+  };
+
+  document.getElementById("showDevice").innerText = "📱 Device: " + phoneModelInput;
+  
+  document.getElementById("page1").classList.remove("active");
+  document.getElementById("page2").classList.add("active");
+  window.scrollTo({ top:0, behavior:"smooth" });
+
+  animateValue("general", generated.general);
+  animateValue("red", generated.red);
+  animateValue("two", generated.two);
+  animateValue("four", generated.four);
+  animateValue("sniper", generated.sniper);
+  animateValue("free", generated.free);
+
+  setTimeout(() => {
+    document.getElementById("gbar").style.width = generated.general+"%";
+    document.getElementById("ghandle").style.left = generated.general+"%";
+
+    document.getElementById("rbar").style.width = generated.red+"%";
+    document.getElementById("rhandle").style.left = generated.red+"%";
+
+    document.getElementById("tbar").style.width = generated.two+"%";
+    document.getElementById("thandle").style.left = generated.two+"%";
+
+    document.getElementById("fbar").style.width = generated.four+"%";
+    document.getElementById("fhandle").style.left = generated.four+"%";
+
+    document.getElementById("sbar").style.width = generated.sniper+"%";
+    document.getElementById("shandle").style.left = generated.sniper+"%";
+
+    document.getElementById("flbar").style.width = generated.free+"%";
+    document.getElementById("flhandle").style.left = generated.free+"%";
+  }, 100);
+
+  const shareText = encodeURIComponent(`🔥 DIVICE SENSITIVITY\n\n📱 Phone: ${phoneModelInput}\n🎯 General: ${generated.general}\n🔴 Red Dot: ${generated.red}\n🔭 2x Scope: ${generated.two}\n🔭 4x Scope: ${generated.four}\n\nGenerated via Divice Sensitivity!`);
+  document.getElementById("whatsappShare").href = `https://api.whatsapp.com/send?text=${shareText}`;
+}
+
+function animateValue(id, end) {
+  let obj = document.getElementById(id);
+  let start = 0;
+  let duration = 600;
+  let startTime = null;
+
+  function animation(currentTime) {
+    if (!startTime) startTime = currentTime;
+    let progress = (currentTime - startTime) / duration;
+    if (progress > 1) progress = 1;
+    let currentVal = Math.floor(start + (end - start) * progress);
+    obj.innerText = currentVal;
+    if (progress < 1) {
+      requestAnimationFrame(animation);
+    }
+  }
+  requestAnimationFrame(animation);
+}
+
+function copySettings(){
+  if(!generated) return;
+  const phoneModelInput = document.getElementById("phoneModel").value.trim() || "Android Device";
+  
+  const text = `🔥 DIVICE SENSITIVITY\n\n📱 Phone: ${phoneModelInput}\n\n🎯 General: ${generated.general}\n🔴 Red Dot: ${generated.red}\n🔭 2× Scope: ${generated.two}\n🔭 4× Scope: ${generated.four}\n🎯 Sniper Scope: ${generated.sniper}\n👁 Free Look: ${generated.free}\n\n⚡ Generated by Divice Sensitivity`;
+
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(showCopied).catch(()=>fallbackCopy(text));
+  }else{
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text){
+  const area=document.createElement("textarea");
+  area.value=text;
+  document.body.appendChild(area);
+  area.select();
+  document.execCommand("copy");
+  area.remove();
+  showCopied();
+}
+
+function showCopied(){
+  const button=document.querySelector(".copy");
+  button.innerText="✅ COPIED!";
+  setTimeout(()=>{ button.innerText="📋 COPY"; },1800);
+}
+
+function goBackToForm(){
+  document.getElementById("page2").classList.remove("active");
+  document.getElementById("page1").classList.add("active");
+  window.scrollTo({ top:0, behavior:"smooth" });
+}
+
+function resetApp(){
+  generated=null;
+  document.getElementById("phoneModel").value = "";
+  document.getElementById("page2").classList.remove("active");
+  document.getElementById("page1").classList.add("active");
+  window.scrollTo({ top:0, behavior:"smooth" });
+}
+</script>
+
+</body>
+</html>
